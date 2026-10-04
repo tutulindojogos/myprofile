@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#d8d9dc">
+  <meta name="description" content="raging">
+  <title>tutulindojogos — PSP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg"></div>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="grain"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <main class="stage">
+    <div class="scene" id="scene"><div class="rig" id="rig">
+    <section class="psp" id="psp">
+      <div class="shine"></div>
+      <i class="cap l"></i><i class="cap r"></i>
+      <div class="psp-top"><span class="led"></span><span class="brand">SONY</span></div>
+
+      <div class="screen-bezel">
+        <div class="screen">
+          <div class="screen-glow"></div>
+
+          <div class="boot" id="boot">
+            <div class="boot-mark">✦</div>
+            <div class="boot-title">tutulindojogos</div>
+            <div class="boot-sub">personal system</div>
+            <button id="startBtn" class="start">PRESS START</button>
+            <div class="boot-hint">tap / enter</div>
+          </div>
+
+          <div class="home hidden" id="home">
+            <header class="profile-head">
+              <div class="mini-avatar">
+                <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="SCP-1471-A">
+              </div>
+              <div>
+                <div class="eyebrow">WELCOME BACK</div>
+                <h1>tutulindojogos</h1>
+                <p>@tutulindojogos</p>
+              </div>
+            </header>
+
+            <nav class="menu" aria-label="Menu principal">
+              <button class="menu-item active" data-panel="profile">✦ PROFILE</button>
+              <button class="menu-item" data-panel="social">✧ SOCIAL</button>
+              <button class="menu-item" data-panel="about">☾ ABOUT</button>
+              <button class="menu-item" data-panel="music">♫ MUSIC</button>
+            </nav>
+
+            <section class="panel active-panel" id="profile">
+              <div class="hero-card">
+                <div class="image-wrap">
+                  <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="SCP-1471-A olhando pela porta">
+                  <span class="image-label">FILE_1471-A</span>
+                </div>
+                <div class="hero-copy">
+                  <span class="tiny">USER PROFILE</span>
+                  <h2>angel.exe</h2>
+                  <p>✦ LEGENDARY ✦</p>
+                  <div class="status"><span></span> online / somewhere</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="social">
+              <div class="panel-title">SOCIAL LINKS</div>
+              <a class="link-card" href="https://instagram.com/tutulindojogos" target="_blank" rel="noopener">
+                <span>◎</span><strong>Instagram</strong><small>@tutulindojogos ↗</small>
+              </a>
+              <a class="link-card" href="https://discord.com/users/tutulindojogos" target="_blank" rel="noopener">
+                <span>◈</span><strong>Discord</strong><small>tutulindojogos ↗</small>
+              </a>
+            </section>
+
+            <section class="panel" id="about">
+              <div class="panel-title">ABOUT</div>
+              <div class="about-box">
+                <div class="code-line"><span>01</span> loading personality...</div>
+                <div class="code-line"><span>02</span> games / internet / music</div>
+                <div class="code-line"><span>03</span> psp and fps</div>
+                <div class="code-line"><span>04</span> status: <b>online</b></div>
+              </div>
+            </section>
+
+            <section class="panel" id="music">
+              <div class="panel-title">NOW PLAYING</div>
+              <div class="music-card">
+                <div class="album">
+                  <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="">
+                  <div class="play-ring">♫</div>
+                </div>
+                <div>
+                  <div class="tiny" id="trackArtist">AMBIENTE</div>
+                  <h2 id="trackTitle">ambient loop</h2>
+                  <p id="trackNote">som gerado no navegador</p>
+                  <a class="spotify hidden" id="trackLink" href="https://open.spotify.com/track/1v4jO5ca9OVgii1glFjz3h" target="_blank" rel="noopener">OPEN ON SPOTIFY ↗</a>
+                </div>
+              </div>
+              <div class="player"><button class="play-btn" id="musicBtn" type="button">▶ PLAY</button><input id="vol" type="range" min="0" max="100" value="60" aria-label="Volume"><span class="music-note" id="musicState">música de fundo</span></div>
+            </section>
+
+            <footer class="screen-footer">
+              <span>◀ / ▶ navigate</span>
+              <span>✦ tutulindojogos</span>
+              <span>v1.0.0</span>
+            </footer>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="side left">
+          <div class="dpad">
+            <button class="up" data-k="up" aria-label="Cima">▲</button><button class="left" data-k="left" aria-label="Esquerda">◀</button><button class="right" data-k="right" aria-label="Direita">▶</button><button class="down" data-k="down" aria-label="Baixo">▼</button><span class="center"></span>
+          </div>
+          <div class="nub" aria-hidden="true"></div>
+        </div>
+        <div class="side right">
+          <div class="face-buttons">
+            <button data-k="tri" aria-label="Música">△</button><button data-k="cir" aria-label="Voltar">○</button><button data-k="x" aria-label="Confirmar">×</button><button data-k="sq" aria-label="Resetar posição">□</button>
+          </div>
+          <div class="pw"><span>POWER</span><button data-k="hold">HOLD</button></div>
+        </div>
+      </div>
+      <div class="psp-bottom">
+        <button data-k="home">HOME</button>
+        <span class="vol"><button data-k="voldn" aria-label="Volume -">−</button><em>VOL</em><button data-k="volup" aria-label="Volume +">+</button></span>
+        <span class="wordmark">PSP</span>
+        <button data-k="note" class="round" aria-label="Música">♪</button>
+        <button data-k="select">SELECT</button><button data-k="start">START</button>
+      </div>
+    </section>
+    <div class="face back">
+      <span class="b-sony">SONY</span>
+      <div class="b-batt"><i class="push">PUSH</i></div>
+      <div class="b-umd"><span class="umd">UMD</span><div class="ring"><b>PSP</b></div></div>
+      <div class="b-mg"><span>MAGICGATE</span><i class="notch"></i></div>
+      <div class="b-strip"><i class="label"></i></div>
+    </div>
+  </div><div class="floor"></div></div>
+
+    <div class="caption">
+      <span>✦ DIGITAL HUMAN</span>
+      <span>PSP PERSONAL PROFILE</span>
+      <span>2000s INTERNET DREAM</span>
+    </div>
+  </main>
+  <audio id="bgm" loop preload="auto" src="assets/music.mp3"></audio>
+  <div class="drag-hint" id="dragHint">arraste o PSP para girar</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
