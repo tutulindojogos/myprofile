@@ -12,16 +12,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="bg"></div>
+  <video class="bgvid" autoplay muted loop playsinline preload="auto" poster="assets/fundo.jpg" aria-hidden="true"><source src="assets/fundo.mp4" type="video/mp4"></video>
+  <div class="shade"></div>
   <canvas id="sky" aria-hidden="true"></canvas>
-  <div class="grain"></div>
-  <div class="stars" aria-hidden="true"></div>
 
   <main class="stage">
     <div class="scene" id="scene"><div class="rig" id="rig">
+    <div class="trig l"><button data-k="L" aria-label="Gatilho L" type="button"></button></div><div class="trig r"><button data-k="R" aria-label="Gatilho R" type="button"></button></div>
     <section class="psp" id="psp">
       <div class="shine"></div>
-      <i class="cap l"></i><i class="cap r"></i>
+      <i class="glare" id="glare"></i>
       <div class="psp-top"><span class="led"></span><span class="brand">SONY</span></div>
 
       <div class="screen-bezel">
