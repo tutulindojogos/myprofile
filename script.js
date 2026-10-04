@@ -43,8 +43,8 @@ function setVol(d) {
 /* ---------- brilho nos botões ---------- */
 function flash(el) {
   if (!el) return;
-  el.classList.add('lit');
-  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('lit'), 380);
+  el.classList.remove('glow'); void el.offsetWidth; el.classList.add('glow');
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('glow'), 800);
 }
 const btn = k => document.querySelector(`[data-k="${k}"]`);
 const actions = {
@@ -55,14 +55,14 @@ const actions = {
   cir: () => inHome() && backToBoot(),
   tri: () => toggleMusic(), note: () => toggleMusic(),
   voldn: () => setVol(-10), volup: () => setVol(10),
-  sq: () => resetView(),
+  sq: () => resetView(), L: () => inHome() && go(-1), R: () => inHome() && go(1),
   home: () => resetView(), select: () => {}, hold: () => {}, wlan: () => {}
 };
 document.querySelectorAll('[data-k]').forEach(b => b.addEventListener('mousedown', e => e.preventDefault())); // não rouba o foco da tela
 document.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => {
   flash(b); actions[b.dataset.k]?.();
 }));
-const keymap = {ArrowLeft:'left', ArrowRight:'right', ArrowUp:'up', ArrowDown:'down', Enter:'x', ' ':'x', Escape:'cir', m:'tri', M:'tri'};
+const keymap = {ArrowLeft:'left', ArrowRight:'right', ArrowUp:'up', ArrowDown:'down', Enter:'x', ' ':'x', Escape:'cir', m:'tri', M:'tri', q:'L', Q:'L', e:'R', E:'R'};
 document.addEventListener('keydown', e => {
   const k = keymap[e.key]; if (!k) return;
   if (e.target.matches?.('input[type=range]') && (k === 'left' || k === 'right')) return;
@@ -72,35 +72,33 @@ document.addEventListener('keydown', e => {
   actions[k]?.();
 });
 
-/* ---------- giro 3D (só quando você arrasta) ---------- */
-let ry = 0, rx = 0, drag = null, anim = null;
-const apply = () => { rig.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`; };
-function resetView() {
-  cancelAnimationFrame(anim);
-  const sy = ry, sx = rx, t0 = performance.now();
-  const target = Math.round(sy / 360) * 360; // volta pelo caminho mais curto
-  (function step(t) {
-    const p = Math.min(1, (t - t0) / 600), e = 1 - Math.pow(1 - p, 3);
-    ry = sy + (target - sy) * e; rx = sx * (1 - e); apply();
-    if (p < 1) anim = requestAnimationFrame(step);
-  })(t0);
+/* ---------- giro 3D (só quando você arrasta; suavizado e leve) ---------- */
+const glare = $('#glare'), mobile = () => matchMedia('(max-width:899px)').matches;
+let ry = 0, rx = 0, tY = 0, tX = 0, drag = null, raf = 0;
+function render() {
+  ry += (tY - ry) * .22; rx += (tX - rx) * .22;
+  if (!drag && Math.abs(tY - ry) < .05) ry = tY; if (!drag && Math.abs(tX - rx) < .05) rx = tX;
+  rig.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+  const n = ((ry % 360) + 540) % 360 - 180, c = Math.cos(n * Math.PI / 180); // luz fixa no ambiente: o brilho desliza ao girar
+  glare.style.transform = `translate(${(-n * .9).toFixed(1)}%,${(rx * 2.2).toFixed(1)}%)`; glare.style.opacity = Math.max(.12, c).toFixed(2);
+  raf = (drag || ry !== tY || rx !== tX) ? requestAnimationFrame(render) : 0;
 }
+const kick = () => { if (!raf) raf = requestAnimationFrame(render); };
+function resetView() { tY = Math.round(ry / 360) * 360; tX = 0; kick(); }
 scene.addEventListener('pointerdown', e => {
-  if (e.target.closest('button,a,input')) return;
-  cancelAnimationFrame(anim);
-  drag = {x: e.clientX, y: e.clientY};
-  scene.classList.add('dragging'); scene.setPointerCapture(e.pointerId);
-  $('#dragHint').classList.add('gone');
+  if (mobile() || e.target.closest('button,a,input')) return;
+  drag = {x: e.clientX, y: e.clientY}; scene.classList.add('dragging'); scene.setPointerCapture(e.pointerId);
+  $('#dragHint').classList.add('gone'); kick();
 });
 scene.addEventListener('pointermove', e => {
   if (!drag) return;
-  ry += (e.clientX - drag.x) * .45;
-  rx = Math.max(-35, Math.min(35, rx - (e.clientY - drag.y) * .3));
-  drag = {x: e.clientX, y: e.clientY}; apply();
+  tY += (e.clientX - drag.x) * .45; tX = Math.max(-30, Math.min(30, tX - (e.clientY - drag.y) * .3));
+  drag = {x: e.clientX, y: e.clientY}; kick();
 });
-const stop = () => { drag = null; scene.classList.remove('dragging'); };
+const stop = () => { drag = null; scene.classList.remove('dragging'); kick(); };
 scene.addEventListener('pointerup', stop); scene.addEventListener('pointercancel', stop);
 scene.addEventListener('dblclick', e => { if (!e.target.closest('button,a,input')) resetView(); });
+render();
 
 /* ---------- música de fundo ----------
    Usa assets/music.mp3 se existir. Se não existir, toca um ambiente suave gerado no navegador. */
@@ -167,18 +165,19 @@ vol.addEventListener('input', () => {
 });
 setState(false);
 
-/* ---------- lateral do PSP: fatias empilhadas (preto + faixa prateada, como o PSP-1000) ---------- */
+/* ---------- espessura do PSP: fatias (preto brilhante + filete prateado) e gatilhos ---------- */
 (function () {
-  const N = 36, D = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--d')) || 112;
+  const N = 30, D = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--d')) || 100;
   for (let k = 0; k < N; k++) {
-    const u = (k / (N - 1)) * 2 - 1, t = Math.abs(u), s = document.createElement('i');
-    const inset = Math.round(10 * Math.pow(t, 6)), silver = Math.abs(u + .05) < .3;
-    const L = silver ? 76 - 14 * t : 12 + 7 * (1 - t);
+    const u = (k / (N - 1)) * 2 - 1, t = Math.abs(u), s = document.createElement('i'), band = Math.abs(u) < .07;
+    const L = band ? 58 : 9 + 6 * (1 - t);
     s.className = 'slice';
-    s.style.cssText = `inset:${inset}px;transform:translateZ(${(u * D / 2 * .98).toFixed(1)}px);` +
-      `background:linear-gradient(180deg,hsl(230,4%,${L + 14}%),hsl(230,4%,${L}%) 45%,hsl(230,5%,${L - 14}%))`;
+    s.style.cssText = `inset:${Math.round(9 * Math.pow(t, 5))}px;transform:translateZ(${(u * D / 2 * .98).toFixed(1)}px);` +
+      `background:linear-gradient(180deg,hsl(230,5%,${L + 16}%),hsl(230,4%,${L}%) 40%,hsl(230,5%,${Math.max(3, L - 6)}%))`;
     rig.insertBefore(s, rig.querySelector('.face.back'));
   }
+  document.querySelectorAll('.trig').forEach(t => { for (let k = 1; k <= 10; k++) {
+    const e = document.createElement('i'); e.className = 'tz'; e.style.transform = `translateZ(${-k * 6.5}px)`; t.insertBefore(e, t.firstChild); } });
 })();
 
 /* ---------- fundo: pétalas caindo e brilhos suaves (por cima da foto) ---------- */
@@ -188,11 +187,12 @@ setState(false);
   const mk = init => ({x: Math.random() * w, y: init ? Math.random() * h : -20 * d, r: (Math.random() * 7 + 5) * d, a: Math.random() * 6.3,
     va: (Math.random() - .5) * .03, vy: (Math.random() * .5 + .35) * d, sw: Math.random() * 6.3, o: Math.random() * .4 + .35});
   function size() {
-    d = Math.min(devicePixelRatio || 1, 1.5); w = cv.width = innerWidth * d; h = cv.height = innerHeight * d;
-    P = Array.from({length: Math.round(w * h / 52000)}, () => mk(true));
-    S = Array.from({length: Math.round(w * h / 30000)}, () => ({x: Math.random() * w, y: Math.random() * h, r: (Math.random() * 3 + 1.5) * d, s: Math.random() * 6.3}));
+    d = 1; w = cv.width = innerWidth * d; h = cv.height = innerHeight * d;
+    P = Array.from({length: Math.round(w * h / 90000)}, () => mk(true));
+    S = Array.from({length: Math.round(w * h / 60000)}, () => ({x: Math.random() * w, y: Math.random() * h, r: (Math.random() * 3 + 1.5) * d, s: Math.random() * 6.3}));
   }
   function frame(t) {
+    if (document.hidden) { if (!still) requestAnimationFrame(frame); return; }
     cx.clearRect(0, 0, w, h); cx.fillStyle = '#fff';
     S.forEach(s => { cx.globalAlpha = .1 + .4 * Math.abs(Math.sin(t / 1100 + s.s)); cx.beginPath(); cx.arc(s.x, s.y, s.r * .5, 0, 6.283); cx.fill(); });
     P.forEach((p, i) => {
@@ -206,3 +206,7 @@ setState(false);
   addEventListener('resize', () => { size(); if (still) frame(0); });
   size(); requestAnimationFrame(frame);
 })();
+
+/* vídeo de fundo: garante o play (autoplay pode ser bloqueado) */
+(function () { const v = $('.bgvid'); if (!v) return; v.muted = true; const go = () => v.play().catch(() => {});
+  go(); v.addEventListener('canplay', go); addEventListener('pointerdown', go, {once: true}); })();
