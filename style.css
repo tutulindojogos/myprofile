@@ -242,3 +242,84 @@ body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;back
 .b-strip{left:5%;right:5%;bottom:0;height:7%;background:linear-gradient(180deg,#e9eaec,#9a9ca2);border-radius:0 0 30px 30px}
 .label{position:absolute;left:33%;width:34%;top:22%;height:50%;background:repeating-linear-gradient(90deg,#222 0 1px,transparent 1px 3px),#efefef;border-radius:3px;opacity:.9}
 @media(max-width:899px){:root{--poly:inset(0 round 50px)}.psp-top{padding:16px 40px 2px}.cap{display:none}}
+
+/* ===== v9: PSP-1000 refeito (bordas, gatilhos, luz) + fundo em vídeo HD ===== */
+html,body{background:#0d0d10 url(assets/fundo.jpg) center/cover fixed no-repeat}
+body:before,body:after,.grain,.stars,.bg,.shine{display:none}
+.bgvid{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;filter:none}
+.shade{position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.05),rgba(0,0,0,.5))}
+#sky{z-index:-1}
+:root{--d:100px;--r:9% 9% 12% 12%/22% 22% 34% 34%;--poly:none}
+.psp,.slice,.face.back{clip-path:none;border-radius:var(--r)}
+.slice{pointer-events:none}
+.rig{will-change:transform}
+.rig .psp{transform:translateZ(calc(var(--d)/2))}
+.face.back{transform:translateZ(calc(var(--d)/-2)) rotateY(180deg)}
+.floor{width:78%;height:34px;margin-top:34px;background:radial-gradient(ellipse,rgba(0,0,0,.55),transparent 70%);filter:none}
+.caption,.drag-hint{color:#e1e3ea;text-shadow:0 1px 6px #000}
+/* luz: brilho que desliza + reflexo de borda */
+.glare{position:absolute;left:-12%;top:-35%;width:62%;height:105%;z-index:8;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(255,255,255,.34),rgba(255,255,255,.1) 40%,transparent 70%);will-change:transform,opacity}
+.psp:after{content:"";position:absolute;inset:0;border-radius:var(--r);z-index:7;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.14),transparent 9%,transparent 86%,rgba(255,255,255,.07)),
+    linear-gradient(105deg,transparent 40%,rgba(255,255,255,.05) 48%,transparent 56%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.13),inset 0 3px 5px rgba(255,255,255,.3),inset 0 -12px 26px rgba(0,0,0,.7),inset 0 0 44px rgba(255,255,255,.035)}
+.psp{background:linear-gradient(180deg,#34353b 0%,#1a1b1f 13%,#09090b 52%,#0e0f12 88%,#1c1d21 100%);border:0;box-shadow:none}
+.screen-bezel{border-radius:12px;padding:12px 14px;background:linear-gradient(145deg,#1d1e23,#020203);
+  box-shadow:0 0 0 3px #0a0a0c,0 0 0 4px #3d3e45,0 0 0 5px #050506,0 0 26px 2px rgba(150,170,255,.07),inset 0 0 0 1px #2e2f35,inset 0 2px 6px rgba(255,255,255,.09)}
+.screen:after{background:linear-gradient(115deg,rgba(255,255,255,.13),transparent 38%)}
+.side.left:before,.side.right:before{content:"";width:74px;height:24px;border-radius:14px;background:radial-gradient(#000 1.5px,transparent 2px) 0 0/7px 7px,#1a1b1f;box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.1)}
+/* gatilhos L / R: cantos do PSP, mesmo preto brilhante, com fresta e espessura */
+.trig{position:absolute;top:-11px;width:22%;height:40px;transform-style:preserve-3d;transform:translateZ(calc(var(--d)/2 - 1px));pointer-events:none}
+.trig.l{left:3%}.trig.r{right:3%}
+.trig button,.trig .tz{position:absolute;inset:0;margin:0;padding:0;border:0;border-radius:38px 12px 3px 3px/30px 12px 3px 3px;background:linear-gradient(180deg,#3f4047,#1d1e22 38%,#0b0b0d)}
+.trig.r button,.trig.r .tz{border-radius:12px 38px 3px 3px/12px 30px 3px 3px}
+.trig .tz{background:linear-gradient(180deg,#26272c,#09090b)}
+.trig button{pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;--c:#cfe0ff;
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.34),inset 0 -1px 0 rgba(255,255,255,.08),0 2px 0 #000,0 3px 0 rgba(255,255,255,.07)}
+.trig button:before{content:"";position:absolute;left:12%;right:12%;top:46%;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.8),transparent);box-shadow:0 1px 0 rgba(255,255,255,.07)}
+.trig button:active{transform:translateY(2px)}
+/* brilho dos botões ao clicar: clarão colorido + onda */
+.dpad button,.psp-bottom button,.pw button{--c:#bcd3ff}
+.face-buttons button[data-k=tri]{--c:#5cffa8}.face-buttons button[data-k=cir]{--c:#ff6b78}.face-buttons button[data-k=x]{--c:#7aa2ff}.face-buttons button[data-k=sq]{--c:#ff9be0}
+.glow{animation:glow .75s ease-out;color:#fff!important;text-shadow:0 0 8px var(--c),0 0 18px var(--c);z-index:6}
+@keyframes glow{
+ 0%{box-shadow:0 0 0 1px var(--c),0 0 14px 3px var(--c),0 0 0 0 var(--c),inset 0 0 12px var(--c)}
+ 55%{box-shadow:0 0 0 1px var(--c),0 0 24px 6px var(--c),0 0 0 12px transparent,inset 0 0 14px var(--c)}
+ 100%{box-shadow:0 0 0 0 transparent,0 0 0 0 transparent,0 0 0 18px transparent,inset 0 0 0 transparent}}
+@media(min-width:900px){
+ .psp{grid-template-columns:21% minmax(0,1fr) 21%;grid-template-areas:"top top top" "left screen right" "bottom bottom bottom";padding:6px 2.5% 8px}
+ .psp-top{padding:10px 17% 4px}.side{gap:14px}
+ .psp-bottom{padding:6px 3% 0;justify-content:space-between;flex-wrap:nowrap;gap:12px}
+ .wordmark{font-size:24px;margin:0 auto}
+}
+/* celular: sem giro, rolagem normal, botões grandes */
+@media(max-width:899px){
+ html,body{height:auto;overflow-x:hidden;overflow-y:auto}
+ .stage{padding:26px 8px 20px;min-height:100svh}
+ .scene{perspective:none;touch-action:pan-y;cursor:default;width:100%}
+ .rig{transform:none!important;will-change:auto}
+ .rig .psp{transform:none}
+ .slice,.face.back,.tz,.glare,.floor,.drag-hint{display:none}
+ :root{--r:34px 34px 52px 52px}
+ .psp{padding:12px 12px 18px;border-radius:var(--r)}
+ .trig{top:-10px;width:30%;height:34px;transform:none}.trig.l{left:5%}.trig.r{right:5%}
+ .trig button{pointer-events:auto;min-height:34px}
+ .psp-top{padding:16px 30px 6px}
+ .screen{min-height:520px}.screen-bezel{padding:8px}
+ .side.left,.side.right{padding:6px 0 0}
+ .dpad{width:136px;height:136px}.dpad button,.dpad .center{width:42px;height:42px}
+ .dpad .up{left:47px;top:4px}.dpad .down{left:47px;bottom:4px}.dpad .left{left:4px;top:47px}.dpad .right{right:4px;top:47px}.dpad .center{left:47px;top:47px}
+ .face-buttons{width:144px;height:144px}.face-buttons button{width:46px;height:46px}
+ .face-buttons button:nth-child(1){left:49px;top:4px}.face-buttons button:nth-child(2){right:4px;top:49px}.face-buttons button:nth-child(3){left:49px;bottom:4px}.face-buttons button:nth-child(4){left:4px;top:49px}
+ .psp-bottom{gap:8px;justify-content:center}.psp-bottom button{min-height:38px;padding:9px 14px}.wordmark{display:none}
+ .caption{display:none}
+}
+@media(max-width:899px){
+ .psp{width:100%;max-width:100%;grid-template-columns:1fr 1fr;grid-template-areas:"top top" "screen screen" "left right" "bottom bottom";row-gap:14px;align-items:start;justify-items:center}
+ .psp-top{width:100%}.screen-bezel{width:100%}
+ .hero-card{grid-template-columns:1fr}.image-wrap{height:150px}
+ .menu{flex-wrap:wrap}
+ .side.left:before,.side.right:before{width:60px;height:20px}
+ .psp-bottom{width:100%;flex-wrap:wrap}
+}
