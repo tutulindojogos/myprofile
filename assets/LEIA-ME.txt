@@ -1,0 +1,3 @@
+bg.jpg: foto de fundo
+music.mp3: sua musica (opcional)
+vita/: modelo 3D e texturas
