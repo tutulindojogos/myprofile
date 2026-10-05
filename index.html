@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffc2e6">
+  <meta name="description" content="raging">
+  <title>tutulindojogos ✦ angel</title>
+  <link rel="icon" href="assets/angel-star.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=DynaPuff:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="loader" role="progressbar" aria-label="carregando" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="ld-card">
+      <img class="ld-angel" src="assets/angel-star.svg" alt="">
+      <div class="ld-title">tutulindojogos</div>
+      <div class="ld-bar">
+        <i class="ld-fill" id="ldFill"></i>
+        <img class="ld-star" id="ldStar" src="assets/angel-star.svg" alt="">
+      </div>
+      <div class="ld-row"><span id="ldMsg">waking up the vita</span><b id="ldPct">0%</b></div>
+    </div>
+  </div>
+  <noscript><style>#loader{display:none}</style></noscript>
+  <div class="bg"><video id="bgv" autoplay muted loop playsinline preload="auto" poster="assets/bg.jpg"><source src="assets/bg.mp4" type="video/mp4"></video></div>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="spot" aria-hidden="true"><i class="beam"></i><i class="pool"></i></div>
+  <div class="lamp"></div>
+  <div class="halo" aria-hidden="true"></div>
+  <div class="grain"></div>
+  <div id="vstatus" hidden></div>
+  <canvas id="gl" aria-label="PS Vita 3D"></canvas>
+  <div id="vscreen">
+    <div class="screen-glow"></div>
+    <div class="boot" id="boot">
+            <img class="boot-mark" src="assets/angel-star.svg" alt="">
+            <div class="boot-title fx">tutulindojogos</div>
+            <div class="boot-sub">personal system</div>
+            <button id="startBtn" class="start">PRESS START</button>
+            <div class="boot-hint">tap / enter</div>
+          </div>
+
+          <div class="home hidden" id="home">
+            <header class="profile-head">
+              <div class="mini-avatar">
+                <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="SCP-1471-A">
+              </div>
+              <div>
+                <div class="eyebrow">WELCOME BACK</div>
+                <h1 class="fx fit">tutulindojogos</h1>
+                <p>@tutulindojogos</p>
+              </div>
+            </header>
+
+            <nav class="menu" aria-label="Menu principal">
+              <button class="menu-item active" data-panel="profile">✦ PROFILE</button>
+              <button class="menu-item" data-panel="social">✧ SOCIAL</button>
+              <button class="menu-item" data-panel="about">☾ ABOUT</button>
+              <button class="menu-item" data-panel="music">♫ MUSIC</button>
+            </nav>
+
+            <section class="panel active-panel" id="profile">
+              <div class="hero-card">
+                <div class="image-wrap">
+                  <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="SCP-1471-A olhando pela porta">
+                  <span class="image-label">FILE_1471-A</span>
+                </div>
+                <div class="hero-copy">
+                  <span class="tiny">USER PROFILE</span>
+                  <h2 class="fx fit">angel.exe</h2>
+                  <p>✦ LEGENDARY ✦</p>
+                  <div class="status"><span></span> online / somewhere</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="social">
+              <div class="panel-title">SOCIAL LINKS</div>
+              <a class="link-card" href="https://instagram.com/tutulindojogos" target="_blank" rel="noopener">
+                <span>◎</span><strong>Instagram</strong><small>@tutulindojogos ↗</small>
+              </a>
+              <a class="link-card" href="https://discord.com/users/tutulindojogos" target="_blank" rel="noopener">
+                <span>◈</span><strong>Discord</strong><small>tutulindojogos ↗</small>
+              </a>
+            </section>
+
+            <section class="panel" id="about">
+              <div class="panel-title">ABOUT</div>
+              <div class="about-box">
+                <div class="code-line"><span>01</span> loading personality...</div>
+                <div class="code-line"><span>02</span> games / internet / music</div>
+                <div class="code-line"><span>03</span> psp and fps</div>
+                <div class="code-line"><span>04</span> status: <b>online</b></div>
+              </div>
+            </section>
+
+            <section class="panel" id="music">
+              <div class="panel-title">NOW PLAYING</div>
+              <div class="music-card">
+                <div class="album">
+                  <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="">
+                  <div class="play-ring">♫</div>
+                </div>
+                <div>
+                  <div class="tiny" id="trackArtist">AMBIENTE</div>
+                  <h2 id="trackTitle" class="fx">ambient loop</h2>
+                  <p id="trackNote">som gerado no navegador</p>
+                  <a class="spotify hidden" id="trackLink" href="https://open.spotify.com/track/1v4jO5ca9OVgii1glFjz3h" target="_blank" rel="noopener">OPEN ON SPOTIFY ↗</a>
+                </div>
+              </div>
+              <div class="eq" aria-hidden="true"></div>
+              <p class="music-note">volume na barra rosa lá embaixo ✧</p>
+            </section>
+
+            <footer class="screen-footer">
+              <span>◀ / ▶ navigate</span>
+              <span>✦ tutulindojogos</span>
+              <span>v2.0 ✧ angel ed.</span>
+            </footer>
+          </div>
+  </div>
+  <nav class="pad" id="pad" aria-label="botões">
+    <button class="pill pl" data-p="l">L</button><button class="pill pr" data-p="r">R</button>
+    <div class="cl dp"><button class="u" data-p="up">▲</button><button class="l" data-p="left">◀</button><button class="r" data-p="right">▶</button><button class="d" data-p="down">▼</button></div>
+    <div class="mid"><button class="pill" data-p="select">select</button><button class="pill" data-p="start">start</button><button class="pill" data-p="ps">ps</button></div>
+    <div class="cl fb"><button class="u bt" data-p="tri">△</button><button class="l bs" data-p="sq">□</button><button class="r bc" data-p="cir">○</button><button class="d bx" data-p="x">×</button></div>
+  </nav>
+  <aside class="guide" id="guide" aria-label="controles">
+    <h3>✦ controls ✦</h3>
+    <ul>
+      <li data-lk="up down left right"><b class="g">✛</b><span>navigate</span></li>
+      <li data-lk="x"><b class="g bx">×</b><span>open / confirm</span></li>
+      <li data-lk="cir"><b class="g bc">○</b><span>back</span></li>
+      <li data-lk="tri"><b class="g bt">△</b><span>music on / off</span></li>
+      <li data-lk="sq"><b class="g bs">□</b><span>reset view</span></li>
+      <li data-lk="l r"><b class="g">L R</b><span>switch tabs</span></li>
+      <li data-lk="start"><b class="g">start</b><span>first tab</span></li>
+      <li data-lk="select"><b class="g">select</b><span>hide this guide</span></li>
+      <li data-lk="ps"><b class="g">ps</b><span>back to start</span></li>
+    </ul>
+  </aside>
+  <div class="vol-hud" id="volHud" role="group" aria-label="música e volume"><button id="musicBtn" type="button" aria-label="tocar / pausar">▶</button><div class="vh"><div class="vh-top"><b id="hudTrack">ambient loop</b><span id="musicState">pausado</span></div><div class="vh-row"><span class="vi">♪</span><input id="vol" type="range" min="0" max="100" value="60" aria-label="Volume"><output id="volPct">60</output></div></div></div>
+  <div class="fly f1" aria-hidden="true"><svg viewBox="0 0 40 30"><path d="M20 15C14 2 2 0 3 10c1 7 9 8 17 5zM20 15c6-13 18-15 17-5-1 7-9 8-17 5zM20 15c-6 2-14 5-12 11 3 5 10-1 12-11zM20 15c6 2 14 5 12 11-3 5-10-1-12-11z" fill="#ffb3de" stroke="#fff" stroke-width="1.2"/></svg></div><div class="fly f2" aria-hidden="true"><svg viewBox="0 0 40 30"><path d="M20 15C14 2 2 0 3 10c1 7 9 8 17 5zM20 15c6-13 18-15 17-5-1 7-9 8-17 5zM20 15c-6 2-14 5-12 11 3 5 10-1 12-11zM20 15c6 2 14 5 12 11-3 5-10-1-12-11z" fill="#ffb3de" stroke="#fff" stroke-width="1.2"/></svg></div>
+  <div class="ticker" aria-hidden="true"><span>✦ tutulindojogos ✦ angel.exe ♡ y2k forever ✧ psp &amp; fps ♡ stay online ✦ ✦ tutulindojogos ✦ angel.exe ♡ y2k forever ✧ psp &amp; fps ♡ stay online ✦ ✦ tutulindojogos ✦ angel.exe ♡ y2k forever ✧ psp &amp; fps ♡ stay online ✦ ✦ tutulindojogos ✦ angel.exe ♡ y2k forever ✧ psp &amp; fps ♡ stay online ✦ </span></div>
+  <canvas id="trail" aria-hidden="true"></canvas>
+  <audio id="bgm" loop preload="auto" src="assets/music.mp3"></audio>
+  <div class="drag-hint" id="dragHint">arraste o Vita para girar</div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js" onerror="document.write('<script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;><\/script>')"></script>
+  <script src="script.js"></script>
+</body>
+</html>
