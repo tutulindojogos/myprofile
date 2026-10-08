@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="raging">
+  <title>tutulindojogos ✦ angel</title>
+  <link rel="icon" href="assets/angel-star.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,700&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="angel.css?v=9">
+</head>
+<body>
+  <div id="loader" role="progressbar" aria-label="carregando" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="ld-card">
+      <img class="ld-angel" src="assets/angel-star.svg" alt="">
+      <div class="ld-title">tutulindojogos</div>
+      <div class="ld-bar">
+        <i class="ld-fill" id="ldFill"></i>
+        <img class="ld-star" id="ldStar" src="assets/angel-star.svg" alt="">
+      </div>
+      <div class="ld-row"><span id="ldMsg">waking up the vita</span><b id="ldPct">0%</b></div>
+    </div>
+  </div>
+  <noscript><style>#loader{display:none}</style></noscript>
+  <div class="bg"><video id="bgv" autoplay muted loop playsinline preload="auto" poster="assets/bg.jpg?v=4"><source src="assets/bg.mp4?v=4" type="video/mp4"></video></div>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="spot" aria-hidden="true"><i class="beam"></i><i class="pool"></i></div>
+  <div class="lamp"></div>
+  <div class="halo" aria-hidden="true"></div>
+  <div class="mist" aria-hidden="true"></div>
+  <div class="moodboard" aria-hidden="true"><figure class="pol p1"><i class="tape"></i><div class="ph" style="background-position:79% 38%"></div><figcaption>angel.exe</figcaption></figure><figure class="pol p2"><i class="tape"></i><div class="ph" style="background-position:79% 78%"></div><figcaption>y2k forever</figcaption></figure><figure class="pol p3"><i class="tape"></i><div class="ph" style="background-position:79% 14%"></div><figcaption>stay online</figcaption></figure><span class="stk s1">✦ angelcore</span><span class="stk s2">2000s ♡ → ✧</span></div>
+  <div class="charm" aria-hidden="true"><i class="chain"></i><img src="assets/angel-star.svg" alt=""></div>
+
+  <div class="grain"></div>
+  <div id="vstatus" hidden></div>
+  <canvas id="gl" aria-label="PS Vita 3D"></canvas>
+  <div id="vscreen">
+    <div class="screen-glow"></div>
+    <div class="bubbles" aria-hidden="true"><i style="--x:44%;--s:27px;--t:17s;--d:-1s"></i><i style="--x:12%;--s:52px;--t:12s;--d:-11s"></i><i style="--x:77%;--s:21px;--t:19s;--d:-6s"></i><i style="--x:7%;--s:23px;--t:17s;--d:-13s"></i><i style="--x:11%;--s:33px;--t:12s;--d:-17s"></i><i style="--x:57%;--s:21px;--t:20s;--d:-3s"></i><i style="--x:31%;--s:55px;--t:11s;--d:-18s"></i><i style="--x:77%;--s:43px;--t:11s;--d:-7s"></i><i style="--x:8%;--s:53px;--t:13s;--d:-9s"></i></div><div class="gloss" aria-hidden="true"></div>
+    <div class="vs-flash" id="vsFlash" aria-hidden="true"></div><div class="ps-pulse" id="psPulse" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Player de clipes">
+      <div class="lb-frame" id="lbFrame">
+        <i class="lb-spark a">✦</i><i class="lb-spark b">✧</i><i class="lb-spark c">✧</i>
+        <div class="lb-top">
+          <span class="lb-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <b class="lb-title" id="lbTitle">clipe</b>
+          <span class="lb-idx" id="lbIdx">1/1</span>
+          <button class="lb-x" id="lbClose" type="button" aria-label="Fechar">×</button>
+        </div>
+        <div class="lb-stage paused loading" id="lbStage">
+          <video id="lbVideo" muted loop playsinline disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate noremoteplayback"></video>
+          <i class="lb-corner tl"></i><i class="lb-corner tr"></i><i class="lb-corner bl"></i><i class="lb-corner br"></i>
+          <span class="lb-rec"><i></i>REC</span>
+          <img class="lb-load" src="assets/angel-star.svg" alt="">
+          <button class="lb-big" id="lbBig" type="button" aria-label="Tocar / pausar"><span>▶</span></button>
+        </div>
+        <div class="lb-bar">
+          <button class="lb-btn" id="lbPrev" type="button" aria-label="Clipe anterior">◀</button>
+          <button class="lb-btn lb-play" id="lbPlay" type="button" aria-label="Tocar / pausar">▶</button>
+          <button class="lb-btn" id="lbNext" type="button" aria-label="Próximo clipe">▶</button>
+          <span class="lb-time" id="lbCur">0:00</span>
+          <div class="lb-seek" id="lbSeek" role="slider" tabindex="0" aria-label="Posição do clipe" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <i class="lb-rail"></i><i class="lb-fill" id="lbFill"></i><img class="lb-star" id="lbStar" src="assets/angel-star.svg" alt="">
+          </div>
+          <span class="lb-time" id="lbDur">0:00</span>
+        </div>
+        <div class="lb-cap" id="lbCap"></div>
+      </div>
+    </div>
+    <div class="sbar"><span id="sbTime">12:00</span><span class="sb-r"><span class="wifi">▂▄▆█</span><span id="sbBat">100%</span><i class="bat"><b></b></i></span></div>
+    <div class="boot" id="boot">
+            <div class="lock"><div id="lkTime">12:00</div><div id="lkDate"></div></div>
+            <div class="boot-star"><i class="orbit o1"></i><i class="orbit o2"></i><img class="boot-mark" src="assets/angel-star.svg" alt=""></div>
+            <div class="boot-title fx">tutulindojogos</div>
+            <div class="boot-sub">personal system</div>
+            <button id="startBtn" class="start">PRESS START</button>
+            <div class="boot-hint">tap / enter</div>
+          </div>
+
+          <div class="home hidden" id="home">
+            <header class="profile-head">
+              <div class="mini-avatar">
+                <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="SCP-1471-A">
+              </div>
+              <div>
+                <div class="eyebrow" id="greet">WELCOME BACK</div>
+                <h1 class="fx fit">tutulindojogos</h1>
+                <p>@tutulindojogos</p>
+              </div>
+            </header>
+
+            <nav class="menu" aria-label="Menu principal">
+              <button class="menu-item active" data-panel="profile">✦ PROFILE</button>
+              <button class="menu-item" data-panel="social">✧ SOCIAL</button>
+              <button class="menu-item" data-panel="about">☾ ABOUT</button>
+              <button class="menu-item" data-panel="music">♫ MUSIC</button>
+              <button class="menu-item" data-panel="clips" id="clipsTab">▶ CLIPS</button>
+              <button class="menu-item" data-panel="trophies">✪ TROPHIES</button>
+            </nav>
+
+            <section class="panel active-panel" id="profile">
+              <div class="hero-card">
+                <div class="image-wrap">
+                  <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="SCP-1471-A olhando pela porta">
+                  <span class="image-label">FILE_1471-A</span>
+                </div>
+                <div class="hero-copy">
+                  <span class="tiny">USER PROFILE</span>
+                  <h2 class="fx fit">angel.exe</h2>
+                  <p>✦ LEGENDARY ✦</p>
+                  <div class="status" id="presence" data-st="none"><span></span><em id="presText">online / somewhere</em></div>
+                  <div class="act" id="presAct" hidden><i id="presIc">♪</i><div><small id="presKind"></small><b id="presName"></b></div></div>
+                  <div class="tags" id="tagRow"><span>#angelcore</span><span>#y2k</span><span>#psp</span><span>#blackandwhite</span></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel" id="social">
+              <div class="panel-title">SOCIAL LINKS</div>
+              <a class="link-card" style="--i:0" href="https://instagram.com/tutulindojogos" target="_blank" rel="noopener">
+                <span>◎</span><strong>Instagram</strong><small>@tutulindojogos ↗</small>
+              </a>
+              <button class="link-card" style="--i:1" type="button" id="copyDiscord" data-copy="tutulindojogos" aria-label="Copiar usuário do Discord: tutulindojogos">
+                <span>◈</span><strong>Discord</strong><small>tutulindojogos <i class="chip" id="copyChip">copy</i></small>
+              </button>
+              <a class="link-card" style="--i:2" href="https://www.roblox.com/pt/users/10652426526/profile" target="_blank" rel="noopener">
+                <span><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="2" transform="rotate(15 10 10)"/><rect x="8" y="8" width="4" height="4" transform="rotate(15 10 10)"/></svg></span><strong>Roblox</strong><small>profile ↗</small>
+              </a>
+              <a class="link-card" style="--i:3" href="https://steamcommunity.com/profiles/76561198850038535/" target="_blank" rel="noopener">
+                <span><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><circle cx="12.4" cy="7.6" r="5.6"/><circle cx="12.4" cy="7.6" r="2"/><circle cx="6" cy="14.4" r="3"/><path d="M8.2 12.4 10.2 10.6"/></svg></span><strong>Steam</strong><small>profile ↗</small>
+              </a>
+            </section>
+
+            <section class="panel" id="about">
+              <div class="panel-title">ABOUT</div>
+              <div class="about-box">
+                <div class="code-line"><span>01</span> loading personality...</div>
+                <div class="code-line"><span>02</span> games / internet / music</div>
+                <div class="code-line"><span>03</span> psp and fps</div>
+                <div class="code-line"><span>04</span> status: <b>online</b></div>
+              </div>
+            </section>
+
+            <section class="panel" id="music">
+              <div class="panel-title">NOW PLAYING</div>
+              <div class="music-card">
+                <div class="album">
+                  <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="">
+                  <div class="play-ring">♫</div>
+                </div>
+                <div>
+                  <div class="tiny" id="trackArtist">AMBIENTE</div>
+                  <h2 id="trackTitle" class="fx">ambient loop</h2>
+                  <p id="trackNote">som gerado no navegador</p>
+                  <a class="spotify hidden" id="trackLink" href="https://open.spotify.com/track/1v4jO5ca9OVgii1glFjz3h" target="_blank" rel="noopener">OPEN ON SPOTIFY ↗</a>
+                </div>
+              </div>
+              <div class="eq" aria-hidden="true"></div>
+              <p class="music-note">volume na barra de vidro lá embaixo ✧</p>
+            </section>
+
+            <section class="panel" id="clips">
+              <div class="panel-title">EDITS &amp; CLIPS <b id="clipCount"></b></div>
+              <div class="clip-grid" id="clipGrid"></div>
+            </section>
+
+            <section class="panel" id="trophies">
+              <div class="panel-title">TROPHIES <b id="trCount">0/9</b></div>
+              <div class="tr-grid" id="trGrid"></div>
+              <button class="tr-reset" id="trReset" type="button">reset progress</button>
+            </section>
+
+            <footer class="screen-footer">
+              <span>◀ / ▶ navigate</span>
+              <span>✦ tutulindojogos</span>
+              <span>v2.0 ✧ angel ed.</span>
+            </footer>
+          </div>
+  </div>
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
+  <nav class="pad" id="pad" aria-label="botões">
+    <button class="pill pl" data-p="l">L</button><button class="pill pr" data-p="r">R</button>
+    <div class="cl dp"><button class="u" data-p="up">▲</button><button class="l" data-p="left">◀</button><button class="r" data-p="right">▶</button><button class="d" data-p="down">▼</button></div>
+    <div class="mid"><button class="pill" data-p="select">select</button><button class="pill" data-p="start">start</button><button class="pill" data-p="ps">ps</button></div>
+    <div class="cl fb"><button class="u bt" data-p="tri">△</button><button class="l bs" data-p="sq">□</button><button class="r bc" data-p="cir">○</button><button class="d bx" data-p="x">×</button></div>
+  </nav>
+  <aside class="guide" id="guide" aria-label="controles">
+    <h3>✦ controls ✦</h3>
+    <ul>
+      <li data-lk="up down left right"><b class="g">✛</b><span>navigate</span></li>
+      <li data-lk="x"><b class="g bx">×</b><span>open / confirm</span></li>
+      <li data-lk="cir"><b class="g bc">○</b><span>back</span></li>
+      <li data-lk="tri"><b class="g bt">△</b><span>music on / off</span></li>
+      <li data-lk="sq"><b class="g bs">□</b><span>reset view</span></li>
+      <li data-lk="l r"><b class="g">L R</b><span>switch tabs</span></li>
+      <li data-lk="start"><b class="g">start</b><span>first tab</span></li>
+      <li data-lk="select"><b class="g">select</b><span>hide this guide</span></li>
+      <li data-lk="ps"><b class="g">ps</b><span>back to start</span></li>
+      <li data-lk="lyrics"><b class="g">L</b><span>lyrics on / off</span></li>
+      <li class="secret-li"><b class="g">?</b><span>↑↑↓↓◀▶◀▶○×</span></li>
+    </ul>
+  </aside>
+  <div class="vol-hud" id="volHud" role="group" aria-label="música e volume"><button id="musicBtn" type="button" aria-label="tocar / pausar">▶</button><div class="vh"><div class="vh-top"><b id="hudTrack">ambient loop</b><i class="vh-eq" aria-hidden="true"><s></s><s></s><s></s><s></s></i><span id="musicState">pausado</span></div><div class="vh-row"><button class="vi" id="volIcon" type="button" aria-label="Silenciar / ativar som" data-lv="2"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" fill-opacity=".25"/><path class="w1" d="M15.2 9.4a3.6 3.6 0 0 1 0 5.2"/><path class="w2" d="M17.6 7a7 7 0 0 1 0 10"/><path class="wx" d="M15.5 9.5l5 5m0-5l-5 5"/></svg></button><div class="vol-wrap"><input id="vol" type="range" min="0" max="100" value="60" aria-label="Volume"><i class="vol-tip" id="volTip">60</i></div><output id="volPct">60</output></div></div></div>
+  
+  <div class="ticker" aria-hidden="true"><span>✦ tutulindojogos ✦ angel.exe ✧ y2k forever ✧ psp &amp; fps ✧ stay online ✦ ✦ tutulindojogos ✦ angel.exe ✧ y2k forever ✧ psp &amp; fps ✧ stay online ✦ ✦ tutulindojogos ✦ angel.exe ✧ y2k forever ✧ psp &amp; fps ✧ stay online ✦ ✦ tutulindojogos ✦ angel.exe ✧ y2k forever ✧ psp &amp; fps ✧ stay online ✦ </span></div>
+  <canvas id="trail" aria-hidden="true"></canvas>
+  <audio id="bgm" loop preload="auto" src="assets/music.mp3"></audio>
+  <div class="drag-hint" id="dragHint">arraste o Vita para girar</div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js" onerror="document.write('<script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;><\/script>')"></script>
+  <script src="script.js"></script>
+  <script src="angel.js?v=9"></script>
+</body>
+</html>
