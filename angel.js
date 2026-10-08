@@ -8,6 +8,7 @@
    │ Exemplo:  [00:12.50] texto da linha                                                │
    │ Dica: sites como lrclib.net entregam a letra já sincronizada nesse formato.        │
    │ Linha vazia ( [01:10.00] ) = tela em branco (parte instrumental).                  │
+   │ MAIS FÁCIL: salve a letra como  assets/lyrics.lrc  e ela vale no lugar deste texto.│
    └────────────────────────────────────────────────────────────────────────────────────┘
    As linhas que vêm aqui são só um exemplo (texto original, não é a letra da música). */
 
@@ -38,6 +39,9 @@ const LRC = `
 // batidas por minuto da música (só é usado quando o navegador não deixa "ouvir" o áudio, tipo abrindo o arquivo direto no PC)
 const BPM = 92;
 
+// Se a letra estiver sempre adiantada (+) ou atrasada (−), acerte aqui em segundos. Ao vivo: teclas [ e ] mudam 0,25s.
+const OFFSET = 0;
+
 (() => {
   'use strict';
   const $ = s => document.querySelector(s);
@@ -49,16 +53,24 @@ const BPM = 92;
   const mmss = s => { s = Math.max(0, s | 0); return (s / 60 | 0) + ':' + String(s % 60).padStart(2, '0'); };
 
   /* ---------- letra (LRC) ---------- */
-  const L = [];
-  LRC.split('\n').forEach(raw => {
-    const m = raw.match(/^\s*\[(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
-    if (m) L.push({t: +m[1] * 60 + parseFloat(m[2]), text: m[3].trim()});
-  });
-  L.sort((a, b) => a.t - b.t);
-  if (!L.length) return;
+  const parseLRC = txt => {
+    const out = [];
+    String(txt).replace(/^\uFEFF/, '').split(/\r\n|\r|\n/).forEach(raw => { // aceita quebra de linha do Windows (CRLF), Mac e Linux
+      const m = raw.match(/^\s*\[(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
+      if (m) out.push({t: +m[1] * 60 + parseFloat(m[2]), text: m[3].trim()});
+    });
+    return out.sort((a, b) => a.t - b.t);
+  };
+  const L = parseLRC(LRC);
+  let fromFile = false;
+  // se existir assets/lyrics.lrc, ele vale no lugar do texto de exemplo (só funciona com o site publicado, não abrindo o arquivo direto)
+  fetch('assets/lyrics.lrc?t=' + Date.now(), {cache: 'no-store'}).then(r => r.ok ? r.text() : '').then(txt => {
+    const a = parseLRC(txt); if (!a.length) return;
+    L.length = 0; a.forEach(x => L.push(x)); fromFile = true; idx = -2; lit = -1;
+  }).catch(() => {});
 
   /* preferências salvas (janela aberta/fechada, posição) */
-  let pref = {open: true, min: false, x: null, y: null};
+  let pref = {open: true, min: false, x: null, y: null, off: 0};
   try { Object.assign(pref, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(pref)); } catch (e) {} };
 
@@ -101,7 +113,7 @@ const BPM = 92;
   const unlockSafe = id => { try { if (typeof unlock === 'function') unlock(id); } catch (e) {} };
 
   /* ---------- estado ---------- */
-  let started = false, raf = 0, idx = -2, lit = -1, firstShow = true, sang = false;
+  let syncMsg = 0, started = false, raf = 0, idx = -2, lit = -1, firstShow = true, sang = false;
   const isOn = () => pref.open;
 
   function setWords(row, text) {
@@ -184,7 +196,7 @@ const BPM = 92;
   /* ---------- loop principal ---------- */
   function frame() {
     raf = requestAnimationFrame(frame);
-    const t = bgm.currentTime, playing = !bgm.paused && !bgm.ended && !bgm.error;
+    const t = bgm.currentTime + OFFSET + (pref.off || 0), playing = !bgm.paused && !bgm.ended && !bgm.error;
     paintBeat(readBeat(t, playing));
 
     let i = idx;
@@ -216,7 +228,8 @@ const BPM = 92;
         }
         const d = isFinite(bgm.duration) && bgm.duration > 0 ? bgm.duration : 161;
         prog.style.setProperty('--p', Math.min(1, t / d).toFixed(4));
-        timeEl.textContent = mmss(t) + ' / ' + mmss(d);
+        const o = pref.off || 0;
+        timeEl.textContent = performance.now() < syncMsg ? 'sync ' + (o > 0 ? '+' : '') + o.toFixed(2) + 's' : mmss(t) + ' / ' + mmss(d);
       }
     }
   }
@@ -256,7 +269,7 @@ const BPM = 92;
     $('#lywMin').addEventListener('click', () => { pref.min = !pref.min; save(); win.classList.toggle('min', pref.min); });
     [rowPrev, rowNext].forEach(r => r.addEventListener('click', () => {
       const g = r.dataset.go; if (g === '' || g == null) return;
-      bgm.currentTime = L[+g].t + .01;
+      bgm.currentTime = Math.max(0, L[+g].t - OFFSET - (pref.off || 0) + .01);
     }));
 
     // arrastar pela barra de título
@@ -288,6 +301,13 @@ const BPM = 92;
       win.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(0) + '%');
     });
     addEventListener('resize', () => { if (pref.x != null) placeSaved(); });
+
+    // [ e ] adiantam/atrasam a letra em 0,25s (fica salvo)
+    addEventListener('keydown', e => {
+      if (e.ctrlKey || e.metaKey || e.altKey || (e.key !== '[' && e.key !== ']')) return;
+      pref.off = Math.round(((pref.off || 0) + (e.key === ']' ? .25 : -.25)) * 100) / 100; save();
+            syncMsg = performance.now() + 1600;
+    });
 
     // tecla L liga/desliga as letras
     addEventListener('keydown', e => {
