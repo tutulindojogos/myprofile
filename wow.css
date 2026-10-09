@@ -1,0 +1,36 @@
+/* ===== v12 — wow ✦ : detalhes pequenos e divertidos (nada de brilho gigante) =====
+   1) trocar de aba: anelzinho de luz + faíscas + linha varrendo o painel + título "decodificando"
+   2) cards e clips inclinam em 3D seguindo o mouse
+   3) moodboard: dá pra ARRASTAR as polaroids e adesivos (a posição fica salva; duplo clique devolve ao lugar; Shift+R devolve todas)
+   4) palavras secretas: digite psp, y2k ou xoxo
+   5) sons bem baixinhos (só com a música ligada) e título da aba que chama você de volta
+   Desligam sozinhos no modo leve (tecla Q) e com "reduzir movimento". Pra desfazer: apague wow.css, wow.js e as 2 linhas no index.html */
+
+.wow-spk{position:fixed;z-index:46;pointer-events:none;margin:-8px 0 0 -8px;font:400 16px/1 Inter,sans-serif;color:#fff;text-shadow:0 0 6px #fff;
+  animation:wowSpk var(--t,1.2s) cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes wowSpk{from{opacity:1;transform:translate(0,0) scale(.4) rotate(0)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.3) rotate(var(--r))}}
+
+.wow-ring{position:fixed;z-index:44;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 10px #fff;pointer-events:none;animation:wowRing .7s ease-out forwards}
+@keyframes wowRing{from{opacity:1;transform:scale(.6)}to{opacity:0;transform:scale(5)}}
+
+.panel.wow-scan{position:relative}
+.panel.wow-scan:after{content:"";position:absolute;top:-4px;bottom:-4px;left:0;width:2px;border-radius:2px;pointer-events:none;z-index:5;
+  background:linear-gradient(rgba(255,255,255,0),#fff,rgba(255,255,255,0));box-shadow:0 0 8px 2px rgba(255,255,255,.8);animation:wowScan .6s cubic-bezier(.3,.6,.2,1) forwards}
+@keyframes wowScan{from{left:0;opacity:1}to{left:100%;opacity:0}}
+
+/* moodboard arrastável */
+body.pol-hover,body.pol-hover canvas{cursor:grab!important}
+body.pol-drag,body.pol-drag *{cursor:grabbing!important;user-select:none}
+.moodboard .pol,.moodboard .stk{transition:scale .18s ease,box-shadow .18s ease}
+.moodboard .lifted{scale:1.07;box-shadow:0 26px 44px rgba(0,0,0,.55)!important}
+
+/* chuva das palavras secretas */
+.wow-fall{position:fixed;top:-30px;z-index:46;pointer-events:none;color:#fff;font:400 var(--s,18px)/1 Inter,sans-serif;text-shadow:0 0 8px #fff;
+  animation:wowFall var(--t,3s) linear var(--d,0s) forwards}
+@keyframes wowFall{0%{opacity:0;transform:translate(0,0) rotate(0)}10%{opacity:1}85%{opacity:.9}100%{opacity:0;transform:translate(var(--sx,30px),calc(100vh + 60px)) rotate(var(--r,200deg))}}
+.wow-chip{position:fixed;left:50%;top:14vh;z-index:47;transform:translateX(-50%);padding:8px 18px;border-radius:999px;border:1px solid #fff;white-space:nowrap;pointer-events:none;
+  font:italic 700 19px "Cormorant Garamond",serif;color:#222;background:linear-gradient(135deg,rgba(255,255,255,.88),rgba(255,255,255,.45));box-shadow:0 6px 18px rgba(0,0,0,.3);animation:wowChip 2.4s ease-out forwards}
+@keyframes wowChip{0%{opacity:0;margin-top:8px}14%{opacity:1;margin-top:0}78%{opacity:1}100%{opacity:0;margin-top:-18px}}
+
+body.lite .wow-ring,body.lite .wow-spk,body.lite .panel.wow-scan:after{display:none!important}
+@media(prefers-reduced-motion:reduce){.wow-ring,.wow-spk,.wow-fall,.panel.wow-scan:after{display:none!important}}

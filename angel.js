@@ -78,10 +78,10 @@ const OFFSET = 0;
   const mk = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   const halo = $('.halo');
 
-  let ghost = null, win = null, tab = null;
+  let ghost = null, win = null, tab = null, pill = null, pillText = null, plit = -1;
   if (!MOBILE) {
     ghost = mk('div', 'ly-ghost'); ghost.setAttribute('aria-hidden', 'true');
-    (halo || $('.moodboard') || document.body.firstChild).before(ghost);
+    // v10: as letras gigantes de fundo foram removidas (o ghost fica fora da página, só pra não quebrar o resto do código)
 
     win = mk('section', 'lyw', `
       <header class="lyw-bar" id="lywBar">
@@ -102,6 +102,12 @@ const OFFSET = 0;
     tab = mk('button', 'lyw-tab', '<span aria-hidden="true">♪</span> lyrics');
     tab.type = 'button'; tab.setAttribute('aria-label', 'Abrir letras da música');
     document.body.appendChild(tab);
+  }
+  /* v10.1 — celular: letra pequena em cima do botão de volume (conta pro troféu "sing along") */
+  if (MOBILE) {
+    pill = mk('div', 'ly-pill', '<button class="lp-btn" type="button" aria-label="Mostrar ou esconder letras">♪</button><div class="lp-text" aria-hidden="true"></div>');
+    document.body.appendChild(pill); pillText = pill.querySelector('.lp-text');
+    pill.querySelector('.lp-btn').addEventListener('click', () => { pref.open = !pref.open; save(); updateVisibility(); });
   }
   const mini = mk('div', 'ly-mini'); mini.id = 'lyMini'; mini.setAttribute('aria-hidden', 'true');
   const note = $('#music .music-note'); if (note) note.before(mini);
@@ -125,10 +131,18 @@ const OFFSET = 0;
   function retrigger(el, cls) { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
 
   function setGhost(text) {
+    return; // v10: sem letras gigantes
     if (!ghost) return;
     ghost.querySelectorAll('b:not(.out)').forEach(o => { o.classList.add('out'); setTimeout(() => o.remove(), 950); });
     if (!text) return;
     const b = mk('b'); b.textContent = text; ghost.appendChild(b);
+  }
+  function setPill(text) {
+    if (!pill) return;
+    pillText.querySelectorAll('.lp-line:not(.out)').forEach(o => { o.classList.add('out'); setTimeout(() => o.remove(), 650); });
+    if (!text) return;
+    const l = mk('span', 'lp-line'); text.split(/\s+/).filter(Boolean).forEach(w => { const s = mk('span', 'w'); s.textContent = w; l.appendChild(s); });
+    pillText.appendChild(l);
   }
   function setMini(text) {
     mini.textContent = '';
@@ -136,7 +150,7 @@ const OFFSET = 0;
   }
 
   function lineChanged(i) {
-    idx = i; lit = -1;
+    idx = i; lit = -1; plit = -1;
     const cur = i >= 0 ? L[i].text : '';
     if (win) {
       const prev = i > 0 ? L[i - 1].text : '', next = i + 1 < L.length ? L[i + 1].text : '';
@@ -146,8 +160,8 @@ const OFFSET = 0;
       if (next) retrigger(rowNext, 'fresh');
       setWords(rowCur, cur); retrigger(rowCur, 'fresh');
     }
-    setGhost(cur); setMini(cur);
-    if (i >= 1 && !sang && win && win.classList.contains('show')) { sang = true; unlockSafe('sing'); }
+    setGhost(cur); setMini(cur); if (pill && pill.classList.contains('show')) setPill(cur);
+    if (i >= 1 && !sang && (win ? win.classList.contains('show') : (pill && pill.classList.contains('show') && !pill.classList.contains('min')))) { sang = true; unlockSafe('sing'); }
   }
 
   /* ---------- batida (analisador de áudio ou pulso falso) ---------- */
@@ -188,9 +202,10 @@ const OFFSET = 0;
   let lastB = -1;
   function paintBeat(b) {
     const v = Math.round(b * 100) / 100; if (v === lastB) return; lastB = v;
-    if (halo) halo.style.setProperty('--beat', v);
+    window.angelBeat = v; if (halo) halo.style.setProperty('--beat', v);
     if (ghost) ghost.style.setProperty('--beat', v);
     if (win) win.style.setProperty('--beat', v);
+    if (pill) pill.style.setProperty('--beat', v);
   }
 
   /* ---------- loop principal ---------- */
@@ -205,6 +220,18 @@ const OFFSET = 0;
     }
     if (i !== idx) lineChanged(i);
 
+    if (pill && pill.classList.contains('show') && !pill.classList.contains('min') && idx >= 0) {
+      const cl = pillText.querySelector('.lp-line:not(.out)');
+      if (cl) {
+        const ws = cl.children, n = ws.length;
+        if (n) {
+          const next = idx + 1 < L.length ? L[idx + 1].t : L[idx].t + 6;
+          const dur = Math.max(1.2, Math.min(next - L[idx].t, 8)) * .8;
+          const want = Math.min(n, Math.floor(((t - L[idx].t) / dur) * n) + 1);
+          if (want !== plit) { for (let k = 0; k < n; k++) ws[k].classList.toggle('on', k < want); plit = want; }
+        }
+      }
+    }
     if (win) {
       win.classList.toggle('paused', !playing);
       ghost.classList.toggle('paused', !playing);
@@ -247,6 +274,11 @@ const OFFSET = 0;
 
   /* ---------- janela: abrir, fechar, minimizar, arrastar ---------- */
   function updateVisibility() {
+    if (pill) {
+      const was = pill.classList.contains('min'), on = started && isOn();
+      pill.classList.toggle('show', started); pill.classList.toggle('min', !isOn());
+      if (on && (was || !pillText.children.length)) { plit = -1; setPill(idx >= 0 ? L[idx].text : ''); }
+    }
     if (!win) return;
     const show = started && isOn();
     if (show && firstShow) { win.classList.add('first'); setTimeout(() => win.classList.remove('first'), 1700); firstShow = false; }

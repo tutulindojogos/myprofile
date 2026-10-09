@@ -124,4 +124,22 @@
 /* o adesivo ANGELCORE saía de baixo da janela de letras: vai pro canto de baixo à direita */
 .s1{left:auto;right:12vw;bottom:9vh}
 .s2{margin-top:30px}
-   .ly-ghost{display:none!important}
+
+/* ===== v10.1 — letra pequena em cima do volume (celular) ===== */
+.ly-pill{display:none}
+@media(max-width:760px){
+  .ly-pill{position:fixed;left:14px;right:14px;margin:0 auto;width:max-content;bottom:calc(250px + env(safe-area-inset-bottom));z-index:14;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 28px);padding:5px 14px 5px 5px;border-radius:19px;
+    background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(228,233,246,.74));border:1px solid #fff;color:#2a2a2e;
+    box-shadow:0 4px 16px rgba(0,0,0,.3),0 0 calc(var(--beat,0) * 22px) rgba(255,255,255,.95),inset 0 1px 0 #fff;opacity:0;pointer-events:none;transition:opacity .45s ease,padding .3s ease}
+  .ly-pill.show{opacity:1;pointer-events:auto}
+  .lp-btn{flex:none;width:24px;height:24px;border-radius:50%;border:1px solid #fff;background:linear-gradient(145deg,#fff,#c8cfe2);color:#2a2a2e;font:13px/1 Inter,sans-serif;padding:0;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+  .lp-text{display:grid;min-width:0;max-width:calc(100vw - 90px);font:italic 700 14.5px/1.08 "Cormorant Garamond",serif;text-align:left}
+  .lp-line{grid-area:1/1;animation:lpIn .6s cubic-bezier(.2,.8,.2,1) both}
+  .lp-line.out{animation:lpOut .5s ease-in forwards}
+  .lp-line .w{display:inline-block;margin-right:.26em;opacity:.3;transform:translateY(2px);transition:opacity .35s ease,transform .35s ease,text-shadow .35s ease}
+  .lp-line .w.on{opacity:1;transform:none;text-shadow:0 0 8px #fff,0 0 14px rgba(255,255,255,.9)}
+  .ly-pill.min{padding:5px}.ly-pill.min .lp-text{display:none}
+  @keyframes lpIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes lpOut{to{opacity:0;transform:translateY(-12px)}}
+}
+@media(prefers-reduced-motion:reduce){.lp-line,.lp-line.out{animation:none}.lp-line.out{display:none}}
