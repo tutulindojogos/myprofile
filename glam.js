@@ -34,8 +34,7 @@
   const chrome = () => { const id = 'cs' + (uid++); return `<svg viewBox="-50 -50 100 100"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".42" stop-color="#9fa9bf"/><stop offset=".55" stop-color="#f4f7ff"/><stop offset="1" stop-color="#7d869b"/></linearGradient></defs>
     <path d="M0-48Q6-6 48 0Q6 6 0 48Q-6 6-48 0Q-6-6 0-48Z" fill="url(#${id})" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M0-40Q3-8 -2-3Q-10-2-40 0Q-8-6 0-40Z" fill="#fff" opacity=".7"/></svg>`; };
   const sticker = (cls, html, css) => { const s = document.createElement('i'); s.className = 'st ' + cls; s.innerHTML = html; if (css) s.style.cssText = css; root.appendChild(s); return s; };
-  [['12vw', '31vh', '6.5vmin', -12], ['31vw', '9vh', '4.4vmin', 10], ['69vw', '17vh', '5.5vmin', 6], ['89vw', '60vh', '4vmin', -8], ['21vw', '74vh', '4.8vmin', 14], ['80vw', '82vh', '3.4vmin', 0]]
-    .forEach(([l, t, w, r]) => sticker('sp', chrome(), `left:${l};top:${t};width:${w};transform:rotate(${r}deg)`));
+  // (estrelas de vidro removidas a pedido)
   sticker('cd', '');
   const txt = 'stay online ✦ y2k forever ✦ angel.exe ✦ ';
   sticker('gring', `<svg viewBox="0 0 120 120"><defs><path id="rp" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><circle cx="60" cy="60" r="57" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.55)" stroke-width="1"/><text font-family="DM Mono,monospace" font-size="9.4" letter-spacing="2.6" fill="#fff"><textPath href="#rp">${txt}${txt}</textPath></text><path d="M60 40Q63 57 80 60Q63 63 60 80Q57 63 40 60Q57 57 60 40Z" fill="#fff"/></svg>`);

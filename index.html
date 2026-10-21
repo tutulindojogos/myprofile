@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="angel.css?v=9">
   <link rel="stylesheet" href="glam.css?v=11">
   <link rel="stylesheet" href="wow.css?v=12">
-  <link rel="stylesheet" href="lux.css?v=16">
+  <link rel="stylesheet" href="lux.css?v=25">
   <link rel="stylesheet" href="perf.css?v=10">
 </head>
 <body>
@@ -80,6 +80,7 @@
         <div class="lb-cap" id="lbCap"></div>
       </div>
     </div>
+    <div class="sg" id="sg" hidden role="dialog" aria-label="mini-jogo"><div class="sg-top"><span>✦ <b id="sgS">0</b></span><span id="sgT">20</span><button id="sgX" type="button" aria-label="fechar">×</button></div><div class="sg-f" id="sgF"></div><div class="sg-e" id="sgE" hidden><b id="sgB">0</b><span id="sgM"></span><button id="sgR" type="button">JOGAR DE NOVO</button></div></div>
     <div class="sbar"><span id="sbTime">12:00</span><span class="sb-r"><span class="wifi">▂▄▆█</span><span id="sbBat">100%</span><i class="bat"><b></b></i></span></div>
     <div class="boot" id="boot">
             <div class="lock"><div id="lkTime">12:00</div><div id="lkDate"></div></div>
@@ -107,6 +108,7 @@
               <button class="menu-item" data-panel="social">✧ SOCIAL</button>
               <button class="menu-item" data-panel="games">✜ GAMES</button>
               <button class="menu-item" data-panel="about">☾ ABOUT</button>
+              <button class="menu-item" data-panel="setup">⌨ SETUP</button>
               <button class="menu-item" data-panel="music">♫ MUSIC</button>
               <button class="menu-item" data-panel="clips" id="clipsTab">▶ CLIPS</button>
               <button class="menu-item" data-panel="trophies">✪ TROPHIES</button>
@@ -114,6 +116,7 @@
 
             <section class="panel active-panel" id="profile">
               <div class="hero-card">
+                <button class="sec-star" id="secStar" type="button" aria-label="mini-game secreto"><i>✧</i> secret game</button>
                 <div class="image-wrap">
                   <img src="https://static.tvtropes.org/pmwiki/pub/images/scp1471_a.jpeg" alt="SCP-1471-A olhando pela porta">
                   <span class="image-label">FILE_1471-A</span>
@@ -158,8 +161,18 @@
                 <div class="code-line"><span>02</span> games / internet / music</div>
                 <div class="code-line"><span>03</span> psp and fps</div>
                 <div class="code-line"><span>04</span> status: <b>online</b></div>
+                <div class="thm" id="thm" aria-label="tema"><i data-th="" style="background:#fff"></i><i data-th="ice" style="background:#8fd3ff"></i><i data-th="lilac" style="background:#e0b8ff"></i><i data-th="mint" style="background:#b8ffe0"></i></div>
                 <div class="ab-m"><div>games<i><b style="--v:96%"></b></i>96</div><div>internet<i><b style="--v:90%"></b></i>90</div><div>music<i><b style="--v:84%"></b></i>84</div><div>psp/fps<i><b style="--v:100%"></b></i>100</div></div>
               </div>
+            </section>
+
+            <section class="panel" id="setup">
+              <div class="panel-title">SETUP / GEAR <b>2 ITEMS</b></div>
+              <div class="gear" id="gear">
+                <div class="gr gr-k" style="--g:#ff9fc4"><span class="gr-n">01</span><div class="gr-a"><i class="gr-glow"></i><img src="assets/aula-win68he.png" alt="AULA WIN68HE rosa" loading="lazy"></div><b>AULA WIN68HE</b><small>teclado · rosa</small></div>
+                <div class="gr gr-m" style="--g:#ffb3d1"><span class="gr-n">02</span><div class="gr-a"><i class="gr-glow"></i><img src="assets/dareu-em901x.png" alt="DAREU EM901X sakura" loading="lazy"></div><b>DAREU EM901X</b><small>mouse · sakura</small></div>
+              </div>
+              <p class="music-note">meu setup de todo dia ✧</p>
             </section>
 
             <section class="panel" id="music">
@@ -186,7 +199,7 @@
             </section>
 
             <section class="panel" id="trophies">
-              <div class="panel-title">TROPHIES <b id="trCount">0/9</b></div>
+              <div class="panel-title">TROPHIES <b id="trCount">0/10</b></div>
               <div class="tr-grid" id="trGrid"></div>
               <button class="tr-reset" id="trReset" type="button">reset progress</button>
             </section>
@@ -230,9 +243,9 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js" onerror="document.write('<script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;><\/script>')"></script>
   <script src="script.js"></script>
   <script src="angel.js?v=9"></script>
-  <script src="glam.js?v=10"></script>
+  <script src="glam.js?v=19"></script>
   <script src="wow.js?v=12"></script>
-  <script src="lux.js?v=15"></script>
+  <script src="lux.js?v=25"></script>
   <script src="perf.js?v=10"></script>
 </body>
 </html>

@@ -601,6 +601,7 @@ const TROPHIES = [
   {id: 'music', name: 'on repeat', desc: 'open music'},
   {id: 'sing', name: 'sing along', desc: 'listen with the lyrics on'},
   {id: 'wish', name: 'make a wish', desc: 'catch a shooting star'},
+  {id: 'star', name: 'star catcher', desc: 'find the hidden star game'},
   {id: 'konami', name: 'old school', desc: '↑ ↑ ↓ ↓ ◀ ▶ ◀ ▶ ○ ×', hint: 'a classic cheat code', secret: true},
   {id: 'plat', name: 'angel.exe', desc: 'get them all', plat: true}
 ];
@@ -650,6 +651,8 @@ function unlock(id) {
     got.plat = Date.now(); saveTrophies(); drawTrophies(); toast(TROPHIES[TROPHIES.length - 1]);
   }
 }
+
+window.tutuUnlock = unlock;
 
 // About: as linhas são digitadas quando a aba abre
 function typeAbout() {
