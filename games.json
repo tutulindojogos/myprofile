@@ -1,0 +1,84 @@
+{
+ "updated": "2026-10-21T04:29:16.779Z",
+ "total": 174,
+ "now": null,
+ "games": [
+  {
+   "appid": 730,
+   "name": "Counter-Strike 2",
+   "hours": 368
+  },
+  {
+   "appid": 10,
+   "name": "Counter-Strike",
+   "hours": 247
+  },
+  {
+   "appid": 105600,
+   "name": "Terraria",
+   "hours": 213
+  },
+  {
+   "appid": 440,
+   "name": "Team Fortress 2",
+   "hours": 85
+  },
+  {
+   "appid": 431960,
+   "name": "Wallpaper Engine",
+   "hours": 71
+  },
+  {
+   "appid": 3146520,
+   "name": "WEBFISHING",
+   "hours": 65
+  },
+  {
+   "appid": 1938090,
+   "name": "Call of Duty®",
+   "hours": 57
+  },
+  {
+   "appid": 2344520,
+   "name": "Diablo® IV",
+   "hours": 56
+  },
+  {
+   "appid": 1623730,
+   "name": "Palworld",
+   "hours": 54
+  },
+  {
+   "appid": 335240,
+   "name": "Transformice",
+   "hours": 53
+  },
+  {
+   "appid": 230410,
+   "name": "Warframe",
+   "hours": 50
+  },
+  {
+   "appid": 444090,
+   "name": "Paladins",
+   "hours": 35
+  }
+ ],
+ "recent": [
+  {
+   "appid": 2495100,
+   "name": "Hello Kitty Island Adventure",
+   "hours2w": 2
+  },
+  {
+   "appid": 230410,
+   "name": "Warframe",
+   "hours2w": 1
+  },
+  {
+   "appid": 2001120,
+   "name": "Split Fiction",
+   "hours2w": 1
+  }
+ ]
+}
