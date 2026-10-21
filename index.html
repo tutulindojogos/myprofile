@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000">
-  <meta name="description" content="raging">
+  <meta name="description" content="tutulindojogos ✦ angel.exe — meu PS Vita pessoal: games, clipes, música e mais">
+  <meta property="og:title" content="tutulindojogos ✦ angel">
+  <meta property="og:description" content="meu PS Vita pessoal na web ✧">
+  <meta property="og:type" content="website">
   <title>tutulindojogos ✦ angel</title>
   <link rel="icon" href="assets/angel-star.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +17,7 @@
   <link rel="stylesheet" href="angel.css?v=9">
   <link rel="stylesheet" href="glam.css?v=11">
   <link rel="stylesheet" href="wow.css?v=12">
+  <link rel="stylesheet" href="lux.css?v=16">
   <link rel="stylesheet" href="perf.css?v=10">
 </head>
 <body>
@@ -101,6 +105,7 @@
             <nav class="menu" aria-label="Menu principal">
               <button class="menu-item active" data-panel="profile">✦ PROFILE</button>
               <button class="menu-item" data-panel="social">✧ SOCIAL</button>
+              <button class="menu-item" data-panel="games">✜ GAMES</button>
               <button class="menu-item" data-panel="about">☾ ABOUT</button>
               <button class="menu-item" data-panel="music">♫ MUSIC</button>
               <button class="menu-item" data-panel="clips" id="clipsTab">▶ CLIPS</button>
@@ -140,6 +145,12 @@
               </a>
             </section>
 
+            <section class="panel" id="games">
+              <div class="panel-title">GAMES <b id="gmCount"></b></div>
+              <div class="gm-now" id="gmNow"></div>
+              <div class="gm-grid" id="gmGrid"></div>
+            </section>
+
             <section class="panel" id="about">
               <div class="panel-title">ABOUT</div>
               <div class="about-box">
@@ -147,6 +158,7 @@
                 <div class="code-line"><span>02</span> games / internet / music</div>
                 <div class="code-line"><span>03</span> psp and fps</div>
                 <div class="code-line"><span>04</span> status: <b>online</b></div>
+                <div class="ab-m"><div>games<i><b style="--v:96%"></b></i>96</div><div>internet<i><b style="--v:90%"></b></i>90</div><div>music<i><b style="--v:84%"></b></i>84</div><div>psp/fps<i><b style="--v:100%"></b></i>100</div></div>
               </div>
             </section>
 
@@ -182,7 +194,7 @@
             <footer class="screen-footer">
               <span>◀ / ▶ navigate</span>
               <span>✦ tutulindojogos</span>
-              <span>v2.0 ✧ angel ed.</span>
+              <span class="vis" id="vis">visits <b>000000</b></span>
             </footer>
           </div>
   </div>
@@ -220,6 +232,7 @@
   <script src="angel.js?v=9"></script>
   <script src="glam.js?v=10"></script>
   <script src="wow.js?v=12"></script>
+  <script src="lux.js?v=15"></script>
   <script src="perf.js?v=10"></script>
 </body>
 </html>
