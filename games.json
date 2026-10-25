@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T20:33:22.826Z",
+ "updated": "2026-10-25T04:14:48.506Z",
  "total": 174,
  "now": null,
  "games": [
@@ -76,9 +76,9 @@
    "hours2w": 1
   },
   {
-   "appid": 2001120,
-   "name": "Split Fiction",
-   "hours2w": 1
+   "appid": 2250500,
+   "name": "Rhythia",
+   "hours2w": 0
   }
  ]
 }
