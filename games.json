@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-02T15:25:52.113Z",
+ "updated": "2026-11-03T00:49:59.182Z",
  "total": 174,
  "now": null,
  "games": [
@@ -68,11 +68,16 @@
   {
    "appid": 2495100,
    "name": "Hello Kitty Island Adventure",
-   "hours2w": 3
+   "hours2w": 2
   },
   {
    "appid": 2250500,
    "name": "Rhythia",
+   "hours2w": 0
+  },
+  {
+   "appid": 1395560,
+   "name": "Kandidatos",
    "hours2w": 0
   }
  ]
