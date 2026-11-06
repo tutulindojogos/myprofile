@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-05T19:47:09.043Z",
- "total": 174,
+ "updated": "2026-11-06T06:04:52.209Z",
+ "total": 175,
  "now": null,
  "games": [
   {
@@ -71,13 +71,13 @@
    "hours2w": 1
   },
   {
-   "appid": 2495100,
-   "name": "Hello Kitty Island Adventure",
+   "appid": 1422450,
+   "name": "Deadlock",
    "hours2w": 0
   },
   {
-   "appid": 2250500,
-   "name": "Rhythia",
+   "appid": 2495100,
+   "name": "Hello Kitty Island Adventure",
    "hours2w": 0
   }
  ]
