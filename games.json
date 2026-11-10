@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T15:52:14.240Z",
+ "updated": "2026-11-10T01:24:25.422Z",
  "total": 175,
  "now": null,
  "games": [
@@ -66,6 +66,11 @@
  ],
  "recent": [
   {
+   "appid": 2495100,
+   "name": "Hello Kitty Island Adventure",
+   "hours2w": 1
+  },
+  {
    "appid": 413150,
    "name": "Stardew Valley",
    "hours2w": 1
@@ -73,11 +78,6 @@
   {
    "appid": 1422450,
    "name": "Deadlock",
-   "hours2w": 0
-  },
-  {
-   "appid": 2495100,
-   "name": "Hello Kitty Island Adventure",
    "hours2w": 0
   }
  ]
