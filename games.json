@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-13T06:09:00.748Z",
+ "updated": "2026-11-13T19:28:25.333Z",
  "total": 176,
- "now": "DEVOUR",
+ "now": null,
  "games": [
   {
    "appid": 730,
@@ -66,6 +66,11 @@
  ],
  "recent": [
   {
+   "appid": 1274570,
+   "name": "DEVOUR",
+   "hours2w": 1
+  },
+  {
    "appid": 2495100,
    "name": "Hello Kitty Island Adventure",
    "hours2w": 1
@@ -73,11 +78,6 @@
   {
    "appid": 413150,
    "name": "Stardew Valley",
-   "hours2w": 1
-  },
-  {
-   "appid": 1274570,
-   "name": "DEVOUR",
    "hours2w": 1
   }
  ]
