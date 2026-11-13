@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-12T23:26:25.987Z",
+ "updated": "2026-11-13T06:09:00.748Z",
  "total": 176,
- "now": null,
+ "now": "DEVOUR",
  "games": [
   {
    "appid": 730,
@@ -76,9 +76,9 @@
    "hours2w": 1
   },
   {
-   "appid": 1422450,
-   "name": "Deadlock",
-   "hours2w": 0
+   "appid": 1274570,
+   "name": "DEVOUR",
+   "hours2w": 1
   }
  ]
 }
