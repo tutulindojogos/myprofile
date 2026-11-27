@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-26T21:17:56.608Z",
+ "updated": "2026-11-27T07:52:21.603Z",
  "total": 176,
- "now": null,
+ "now": "Marvel Rivals",
  "games": [
   {
    "appid": 730,
@@ -71,9 +71,9 @@
    "hours2w": 3
   },
   {
-   "appid": 1274570,
-   "name": "DEVOUR",
-   "hours2w": 1
+   "appid": 2767030,
+   "name": "Marvel Rivals",
+   "hours2w": 2
   },
   {
    "appid": 431960,
